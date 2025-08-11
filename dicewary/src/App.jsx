@@ -1,6 +1,9 @@
 import './App.css'
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
+import { Grid } from '@mui/material';
+import { Box } from '@mui/material';
+import { Link } from '@mui/material';
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -52,35 +55,124 @@ function App() {
     return newPassphrase;
   }
 
-  return (
-    <>
-      <div>
+  // this function from GeeksForGeeks at https://www.geeksforgeeks.org/reactjs/how-to-copy-text-to-the-clipboard-in-react-js/
+  const handleCopyClick = async () => {
+        try {
+            await window.navigator.clipboard.writeText(passphrase);
+            alert("Copied to clipboard!");
+        } catch (err) {
+            console.error(
+                "Unable to copy to clipboard.",
+                err
+            );
+            alert("Copy to clipboard failed.");
+        }
+    };
 
-        <Typography
-          variant="h1"
+    function TitleBox() {
+      return (
+        <Box
+          sx={{ mb: 5 }}
         >
-          Dicewary
-        </Typography>
+          <Typography
+            variant="h1"
+          >
+            Dicewary
+          </Typography>
 
-        <Typography
-          variant="body1"
-          sx={{ margin: 2 }}
-        >
-          {passphrase}
-        </Typography>
+          <Typography
+            variant="caption"
+          >
+            Quickly generate complex passwords--backed by mathematics! <br/>
+            Based on the <Link href="https://theworld.com/~reinhold/diceware.html" underline='hover' rel="noopener noreferrer">method </Link>
+             outlined by Arnold G. Reinhold<br/>
+            using the EFF's improved <Link href="https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt" underline='hover' rel="noopener noreferrer">wordlist</Link>
+          </Typography>
+        </Box>
+      )
+    }
 
-        <Button variant='contained'
-          onClick={() => {
-            generate(5);
-          }}
-        >
-          Generate
-        </Button>
+  if (passphrase != "") {
+    return (
+        <>
+          <div>
 
-      </div>
-      
-    </>
-  )
+            <TitleBox/>
+
+            <Box
+              sx={{  }}
+            >
+              <Typography
+                variant="body1"
+                sx={{ margin: 2 }}
+              >
+                {passphrase}
+              </Typography>
+            </Box>
+            
+            <Grid
+              container spacing={1}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Button 
+                variant='contained'
+                onClick={() => {
+                  generate(5);
+                }}
+              >
+                Generate
+              </Button>
+              <Button
+                variant='contained'
+                onClick={() => {
+                  handleCopyClick();
+                }}
+              >
+                Copy to clipboard
+              </Button>
+            </Grid>
+
+          </div>
+        </>
+      )
+  } else {
+    return (
+      <>
+        <div>
+
+          <TitleBox/>
+
+          <Box>
+            <Typography
+              variant="body1"
+              sx={{ margin: 2 }}
+            >
+              Click generate to make a password!
+            </Typography>
+          </Box>
+
+          <Grid
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Button variant='contained'
+              onClick={() => {
+                generate(5);
+              }}
+            >
+              Generate
+            </Button>
+          </Grid>
+
+        </div>
+      </>
+    )
+  }
+
+  
 }
 
 export default App
