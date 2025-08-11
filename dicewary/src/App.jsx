@@ -4,10 +4,22 @@ import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Box } from '@mui/material';
 import { Link } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+
 
 function App() {
+
+  let theme = createTheme({
+    typography: {
+      body1: {
+        fontSize: 24,
+      },
+    },
+  });
+  // theme = responsiveFontSizes(theme);
 
   const [wordlist, setWordlist] = useState(new Map());
   const [passphrase, setPassphrase] = useState("");
@@ -92,82 +104,88 @@ function App() {
       )
     }
 
+    
+
   if (passphrase != "") {
     return (
         <>
+          <ThemeProvider theme={theme}>
+            <div>
+
+              <TitleBox/>
+
+              <Box
+                sx={{  }}
+              >
+                <Typography
+                  variant="body1"
+                  sx={{ margin: 2 }}
+                >
+                  {passphrase}
+                </Typography>
+              </Box>
+              
+              <Grid
+                container spacing={1}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Button 
+                  variant='contained'
+                  onClick={() => {
+                    generate(5);
+                  }}
+                >
+                  Generate
+                </Button>
+                <Button
+                  variant='contained'
+                  onClick={() => {
+                    handleCopyClick();
+                  }}
+                >
+                  Copy to clipboard
+                </Button>
+              </Grid>
+
+            </div>
+          </ThemeProvider>
+        </>
+      )
+  } else {
+    return (
+      <>
+      <ThemeProvider theme={theme}>
           <div>
 
             <TitleBox/>
 
-            <Box
-              sx={{  }}
-            >
+            <Box>
               <Typography
                 variant="body1"
                 sx={{ margin: 2 }}
               >
-                {passphrase}
+                Click generate to make a password!
               </Typography>
             </Box>
-            
+
             <Grid
-              container spacing={1}
               display="flex"
               alignItems="center"
               justifyContent="center"
             >
-              <Button 
-                variant='contained'
+              <Button variant='contained'
                 onClick={() => {
                   generate(5);
                 }}
               >
                 Generate
               </Button>
-              <Button
-                variant='contained'
-                onClick={() => {
-                  handleCopyClick();
-                }}
-              >
-                Copy to clipboard
-              </Button>
             </Grid>
 
           </div>
-        </>
-      )
-  } else {
-    return (
-      <>
-        <div>
-
-          <TitleBox/>
-
-          <Box>
-            <Typography
-              variant="body1"
-              sx={{ margin: 2 }}
-            >
-              Click generate to make a password!
-            </Typography>
-          </Box>
-
-          <Grid
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Button variant='contained'
-              onClick={() => {
-                generate(5);
-              }}
-            >
-              Generate
-            </Button>
-          </Grid>
-
-        </div>
+        </ThemeProvider>
       </>
     )
   }
