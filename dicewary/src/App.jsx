@@ -104,7 +104,16 @@ function App() {
       )
     }
 
-    
+    function Footer() {
+      return (
+        <Box
+          position={"fixed"}
+          bottom={0}
+        >
+          Made by Andrew Marston
+        </Box>
+      )
+    }
 
   if (passphrase != "") {
     return (
@@ -148,7 +157,7 @@ function App() {
                   Copy to clipboard
                 </Button>
               </Grid>
-
+              <Footer/>
             </div>
           </ThemeProvider>
         </>
@@ -183,7 +192,7 @@ function App() {
                 Generate
               </Button>
             </Grid>
-
+            <Footer/>
           </div>
         </ThemeProvider>
       </>
