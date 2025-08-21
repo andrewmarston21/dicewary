@@ -107,10 +107,10 @@ function App() {
     function Footer() {
       return (
         <Box
-          position={"fixed"}
+          sx={{margin: "auto", alignItems: "flex-end"}}
           bottom={0}
         >
-          Made by Andrew Marston
+          Made by Andrew Marston | andrew.marston21@gmail.com | <Link href="https://github.com/andrewmarston21">My GitHub</Link> | <Link href="https://www.linkedin.com/in/andrewmarston21/">My LinkedIn</Link>
         </Box>
       )
     }
